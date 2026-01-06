@@ -1,0 +1,308 @@
+  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nesha — Advanced Portfolio</title>
+  <style>
+    :root{
+      --bg:#0f1720;
+      --card:#0f1728;
+      --accent:#00ffcc;
+      --muted:#9aa4af;
+      --glass: rgba(255,255,255,0.04);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(0,102,255,0.06), transparent 8%),
+                  radial-gradient(1000px 400px at 90% 90%, rgba(0,255,204,0.04), transparent 8%),
+                  var(--bg);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      scroll-behavior:smooth;
+    }
+
+    
+    header.site {
+      position:sticky; top:0; z-index:30;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:1rem 1.5rem; gap:1rem;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(15,23,32,0.6), rgba(15,23,32,0.35));
+      border-bottom:1px solid rgba(255,255,255,0.03);
+    }
+    .logo{font-weight:700; letter-spacing:0.6px; color:var(--accent)}
+    nav{display:flex; align-items:center; gap:1rem;}
+    nav a{
+      color:var(--muted); text-decoration:none; font-weight:600; padding:0.5rem 0.6rem;
+      border-radius:6px; transition:all .18s ease;
+    }
+    nav a:hover{color:var(--accent); background:var(--glass)}
+
+    /* mobile */
+    .menu-btn{display:none; background:transparent; border:0; color:var(--muted); font-size:1.2rem}
+    @media (max-width:800px){
+      nav{display:none; position:absolute; right:1rem; top:72px; flex-direction:column; background:#071018; padding:0.5rem; border-radius:8px;}
+      nav.show{display:flex}
+      .menu-btn{display:block}
+    }
+
+    /* hero */
+    .hero{
+      display:grid; grid-template-columns: 340px 1fr; gap:2rem; align-items:center;
+      padding:3.5rem 2rem; max-width:1200px; margin:0 auto;
+    }
+    .card-profile{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.04);
+      padding:1.25rem; border-radius:14px; display:flex; flex-direction:column; align-items:center;
+      box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+      transform:translateY(0); animation:float 6s ease-in-out infinite;
+    }
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+    .avatar{
+      width:140px; height:140px; border-radius:50%; overflow:hidden; border:4px solid rgba(255,255,255,0.06);
+      box-shadow:0 8px 30px rgba(2,6,23,0.6);
+      background:linear-gradient(135deg,#0b1220,#09202a);
+    }
+    .avatar img{width:100%; height:100%; object-fit:cover; display:block}
+
+    .name{margin-top:1rem; font-size:1.35rem; font-weight:700; color:#fff}
+    .role{color:var(--muted); margin-top:0.25rem; font-weight:600}
+    .socials{display:flex; gap:0.5rem; margin-top:0.75rem}
+    .chip{background:rgba(255,255,255,0.03); padding:0.45rem 0.65rem; border-radius:999px; color:var(--muted); font-weight:600}
+
+    .hero-intro{
+      padding:1rem 1.25rem;
+      background: linear-gradient(180deg, rgba(0,255,204,0.03), rgba(0,102,255,0.02));
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.03);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+    }
+    .hero-intro h1{margin:0; font-size:2.1rem; color:#fff}
+    .typing{display:inline-block; color:var(--accent); font-weight:700; margin-left:6px}
+    .lead{color:var(--muted); margin-top:0.65rem; line-height:1.5}
+
+    .cta{margin-top:1rem; display:flex; gap:0.75rem; align-items:center}
+    .btn-primary{background:var(--accent); color:#071018; padding:0.7rem 1rem; border-radius:10px; border:0; font-weight:700; cursor:pointer}
+    .btn-ghost{background:transparent; color:var(--muted); border:1px solid rgba(255,255,255,0.04); padding:0.6rem 0.9rem; border-radius:10px; cursor:pointer}
+
+    /* sections */
+    .sections-wrap{max-width:1200px; margin:2rem auto; padding:0 1.25rem; display:grid; gap:2rem}
+    .section{background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent); padding:1.25rem; border-radius:12px; border:1px solid rgba(255,255,255,0.03)}
+    .section h2{margin-top:0; color:#fff}
+
+    /* projects grid */
+    .projects-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem}
+    .project{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:1rem; border-radius:10px; position:relative; overflow:hidden; transition:transform .28s cubic-bezier(.2,.9,.3,1), box-shadow .2s;
+      transform-origin:center; border:1px solid rgba(255,255,255,0.03);
+    }
+    .project:hover{transform:translateY(-8px) rotateX(3deg) scale(1.02); box-shadow: 0 16px 40px rgba(2,6,23,0.6)}
+    .project h3{margin:0 0 0.5rem 0}
+    .project p{color:var(--muted); margin:0 0 0.5rem 0}
+    .tags{display:flex; gap:0.5rem; flex-wrap:wrap}
+    .tag{font-size:12px; background:rgba(255,255,255,0.02); padding:0.25rem 0.5rem; border-radius:6px; color:var(--muted)}
+
+    /* skills */
+    .skills{display:flex; gap:1rem; flex-wrap:wrap}
+    .skill{flex:1; min-width:220px}
+    .skill .bar{height:10px; background:rgba(255,255,255,0.04); border-radius:999px; overflow:hidden; margin-top:0.5rem}
+    .skill .fill{height:100%; width:0; background:linear-gradient(90deg,var(--accent),#0066ff); border-radius:999px; transition:width 1.2s cubic-bezier(.2,.9,.3,1)}
+
+    /* contact form */
+    form#contactForm{display:grid; gap:0.6rem; grid-template-columns:1fr 1fr; align-items:start}
+    form input, form textarea{
+      background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03); color:inherit; padding:0.75rem; border-radius:8px;
+    }
+    form textarea{grid-column:1 / -1; min-height:120px; resize:vertical}
+    form button{grid-column:1/-1; justify-self:start; padding:0.7rem 1rem; border-radius:8px; border:0; background:var(--accent); color:#071018; font-weight:700; cursor:pointer}
+
+    /* reveal animation */
+    .reveal{opacity:0; transform:translateY(20px); transition:opacity .7s ease, transform .7s ease}
+    .reveal.show{opacity:1; transform:translateY(0)}
+
+    footer{padding:1.25rem; text-align:center; color:var(--muted); margin-top:1rem}
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr; padding:2rem 1rem}
+      .avatar{width:120px; height:120px}
+      form#contactForm{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header class="site">
+    <div class="logo">Nesha</div>
+
+    <nav id="mainNav" aria-label="Main navigation">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <aside class="card-profile reveal">
+        <div class="avatar" aria-hidden="true">
+          <!-- place profile.jpg in same folder -->
+          <img src="nkimage.jpg" alt="Nesha — profile photo" onerror="this.style.opacity=.08; this.parentElement.style.background='linear-gradient(135deg,#123,#045)';" />
+        </div>
+        <div class="name">Nesha kumar</div>
+        <div class="role">Fullstack Developer</div>
+        <div class="socials" aria-hidden="true">
+          <span class="chip">GitHub</span>
+          <span class="chip">LinkedIn</span>
+        </div>
+      </aside>
+
+      <div class="hero-intro reveal">
+        <h1>Hello, I build delightful web apps<span class="typing" id="typing"></span></h1>
+        <p class="lead">I build full-stack experiences with websites, good performance and thoughtful animations. I focus on accessibility, responsiveness and maintainable code.</p>
+        <div class="cta">
+          <a class="btn-primary" href="#projects">View projects</a>
+          <a class="btn-ghost" href="#contact">Hire me</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="sections-wrap">
+      <section id="about" class="section reveal">
+        <h2>About</h2>
+        <p> Fullstack Developer. Experienced with application deployment, troubleshooting, and building tools that help teams be more productive.</p>
+      </section>
+
+      <section id="projects" class="section reveal">
+        <h2>Projects</h2>
+        <div class="projects-grid">
+          <article class="project">
+            <h3>medical record system</h3>
+            <p>medical record system using Developed and maintained a secure medical records management system with role-based access control.Implemented CRUD operations for patient data, appointments, and medical histories using Django and React.</p>
+            <div class="tags"><span class="tag">JavaScript</span><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Django</span></div>
+          </article>
+          <article class="project">
+            <h3>student management system</h3>
+            <p>Designed and developed a full-stack CRUD application to manage student enrollment, attendance, grades, and course assignments.</p>
+            <div class="tags"><span class="tag">flask</span><span class="tag">CSS</span><span class="tag">HTML</span></div>
+          </article>
+          <article class="project">
+            <h3>icecream website</h3>
+            <p>- Developed a CRUD-based application to manage ice cream flavors, inventory, and customer orders.</p>
+
+            <div class="tags"><span class="tag">JavaScript</span><span class="tag">HTML</span><span class="tag">CSS</span></div>
+          <p>Designed and developed a full-stack CRUD application to manage student enrollment, attendance, grades, and course assignments.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="skills" class="section reveal">
+        <h2>Skills</h2>
+        <div class="skills">
+           <div class="skill">
+            <strong><html></strong>
+            <div class="bar"><div class="fill" data-value="86"></div></div>
+          </div>
+            <div class="skill">
+            <strong>CSS</strong>
+            <div class="bar"><div class="fill" data-value="86"></div></div>
+          </div>
+          <div class="skill">
+            <strong>JavaScript</strong>
+            <div class="bar"><div class="fill" data-value="80"></div></div>
+          </div>
+          <div class="skill">
+            <strong>Frontend</strong>
+            <div class="bar"><div class="fill" data-value="86"></div></div>
+          </div>
+          <div class="skill">
+            <strong>Backend / Node</strong>
+            <div class="bar"><div class="fill" data-value="78"></div></div>
+          </div>
+           <div class="skill">
+            <strong>mysql / nosql</strong>
+            <div class="bar"><div class="fill" data-value="78"></div></div>
+        </div>
+      </section>
+
+      <section id="contact" class="section reveal">
+        <h2>Contact</h2>
+        <form id="contactForm" autocomplete="off">
+          <input type="text" name="name" placeholder="Your name" required />
+          <input type="email" name="email" placeholder="Email" required />
+          <textarea name="message" placeholder="Message" required></textarea>
+          <button type="submit">Send message</button>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Nesha — Built with care.
+  </footer>
+
+  <script>
+  
+     const menuBtn = document.getElementById('menuBtn');
+    const nav = document.getElementById('mainNav');
+    menuBtn?.addEventListener('click', ()=>nav.classList.toggle('show'));
+
+  
+    const phrases = [' — frontend.', ' — backend.', ' — fullstack.', 'web apps.'];
+    let idx = 0, ch = 0, back = false;
+    const el = document.getElementById('typing');
+    function tick(){
+      const cur = phrases[idx];
+      if(!back) ch++; else ch--;
+      el.textContent = cur.slice(0,ch);
+      if(!back && ch === cur.length){ back=true; setTimeout(tick,800); return }
+      if(back && ch === 0){ back=false; idx=(idx+1)%phrases.length; }
+      setTimeout(tick, back?50:90);
+    }
+    tick();
+
+
+    const io = new IntersectionObserver((entries)=>{
+      for(const e of entries){
+        if(e.isIntersecting) e.target.classList.add('show');
+      }
+    }, {threshold:0.12});
+    document.querySelectorAll('.reveal').forEach(n=>io.observe(n));
+
+    
+    const skillsObserver = new IntersectionObserver((entries)=>{
+      for(const e of entries){
+        if(e.isIntersecting){
+          e.target.querySelectorAll('.fill').forEach(el => {
+            const v = el.getAttribute('data-value') || 60;
+            el.style.width = v + '%';
+          });
+          skillsObserver.unobserve(e.target);
+        }
+      }
+    }, {threshold:0.2});
+    const skillsSection = document.getElementById('skills');
+    if(skillsSection) skillsObserver.observe(skillsSection);
+
+    document.getElementById('contactForm').addEventListener('submit', e=>{
+      e.preventDefault();
+      const name = e.target.name.value.trim() || 'there';
+      alert(`Thanks, ${name}! I'll get back to you soon.`);
+      e.target.reset();
+    });
+
+
+    document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click', ()=>nav.classList.remove('show')));
+  </script>
+</body>
+</html>
